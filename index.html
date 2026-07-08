@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Receipt Share Scanner</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <div class="intro">
+          <p class="eyebrow">Receipt splitter</p>
+          <h1 id="app-title">Receipt Share Scanner</h1>
+          <p class="summary">Scan a receipt, clean up the items, submit the final receipt, then let each participant claim their quantities.</p>
+        </div>
+
+        <div class="tool-grid">
+          <section class="panel uploader-panel" aria-label="Receipt upload">
+            <label class="drop-zone" id="dropZone" for="imageInput">
+              <input id="imageInput" type="file" accept="image/*">
+              <span class="upload-icon" aria-hidden="true">+</span>
+              <span class="drop-title">Choose a receipt photo</span>
+              <span class="drop-subtitle">JPG, PNG, WebP, BMP, or GIF</span>
+            </label>
+
+            <div class="preview-frame" id="previewFrame" hidden>
+              <img id="imagePreview" alt="Uploaded receipt preview">
+            </div>
+
+            <div class="controls">
+              <label class="field">
+                <span>Language</span>
+                <select id="languageSelect">
+                  <option value="eng">English</option>
+                  <option value="eng+spa">English + Spanish</option>
+                  <option value="eng+fra">English + French</option>
+                  <option value="eng+deu">English + German</option>
+                  <option value="eng+swe">English + Swedish</option>
+                </select>
+              </label>
+              <button class="primary-button" id="scanButton" type="button" disabled>Scan receipt</button>
+            </div>
+
+            <div class="status-area" aria-live="polite">
+              <div class="progress-track" aria-hidden="true">
+                <span id="progressBar"></span>
+              </div>
+              <p id="statusText">Upload a receipt to begin.</p>
+            </div>
+          </section>
+
+          <section class="panel review-panel" aria-label="Receipt review">
+            <div class="section-top">
+              <div>
+                <p class="eyebrow">Step 1</p>
+                <h2>Check receipt items</h2>
+              </div>
+              <div class="totals-group">
+                <div class="total-box">
+                  <span>All items</span>
+                  <strong id="receiptTotal">kr 0.00</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="item-toolbar">
+              <label class="currency-field">
+                <span>Currency</span>
+                <select id="currencySelect">
+                  <option value="SEK">SEK</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </label>
+              <button id="addItemButton" type="button">Add item</button>
+              <button id="parseButton" type="button" disabled>Rebuild from text</button>
+              <button class="primary-button" id="submitReceiptButton" type="button" disabled>Submit receipt</button>
+            </div>
+
+            <div class="items-list" id="itemsList">
+              <div class="empty-state">Scanned receipt items will appear here.</div>
+            </div>
+
+            <details class="raw-text">
+              <summary>Scanned text</summary>
+              <textarea id="outputText" spellcheck="true" placeholder="OCR text appears here. You can edit it, then rebuild the item list."></textarea>
+            </details>
+          </section>
+        </div>
+
+        <section class="panel participants-panel is-disabled" id="participantsPanel" aria-label="Participant shares">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">Step 2</p>
+              <h2>Participant shares</h2>
+            </div>
+            <div class="participant-actions">
+              <label class="name-field">
+                <span>Name</span>
+                <input id="participantName" type="text" placeholder="Alex">
+              </label>
+              <button class="primary-button" id="addParticipantButton" type="button" disabled>Add person</button>
+            </div>
+          </div>
+
+          <div class="submitted-items" id="submittedItems">
+            <div class="empty-state">Submit the reviewed receipt to create the participant table.</div>
+          </div>
+
+          <div class="participants-list" id="participantsList"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
