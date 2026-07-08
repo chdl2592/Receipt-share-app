@@ -3,21 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- This title appears in the browser tab. Change it if you rename the app. -->
     <title>Receipt Share Scanner</title>
+    <!-- This connects the page to styles.css, which controls colors, spacing, and layout. -->
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="app-shell">
       <section class="workspace" aria-labelledby="app-title">
+        <!-- Main page intro. Edit the visible app title and description here. -->
         <div class="intro">
-          <p class="eyebrow">Receipt splitter</p>
-          <h1 id="app-title">Receipt Share Scanner</h1>
+          <p class="eyebrow">The Gang</p>
+          <h1 id="app-title">Receipt Share Scanner For The Boys </h1>
           <p class="summary">Scan a receipt, clean up the items, submit the final receipt, then let each participant claim their quantities.</p>
         </div>
 
         <div class="tool-grid">
+          <!-- Upload panel. This is the left-hand area where users choose a receipt image. -->
           <section class="panel uploader-panel" aria-label="Receipt upload">
             <label class="drop-zone" id="dropZone" for="imageInput">
+              <!-- The file input opens the image picker. The text around it is what users see. -->
               <input id="imageInput" type="file" accept="image/*">
               <span class="upload-icon" aria-hidden="true">+</span>
               <span class="drop-title">Choose a receipt photo</span>
@@ -42,6 +47,7 @@
               <button class="primary-button" id="scanButton" type="button" disabled>Scan receipt</button>
             </div>
 
+            <!-- The app updates this text while loading/scanning. The starting message can be changed here. -->
             <div class="status-area" aria-live="polite">
               <div class="progress-track" aria-hidden="true">
                 <span id="progressBar"></span>
@@ -50,6 +56,7 @@
             </div>
           </section>
 
+          <!-- Step 1: the receipt owner reviews and fixes scanned item data before sharing it. -->
           <section class="panel review-panel" aria-label="Receipt review">
             <div class="section-top">
               <div>
@@ -65,6 +72,7 @@
             </div>
 
             <div class="item-toolbar">
+              <!-- Currency options. Add another <option> here if you want more currencies. -->
               <label class="currency-field">
                 <span>Currency</span>
                 <select id="currencySelect">
@@ -79,10 +87,12 @@
               <button class="primary-button" id="submitReceiptButton" type="button" disabled>Submit receipt</button>
             </div>
 
+            <!-- JavaScript fills this area with editable receipt rows after scanning. -->
             <div class="items-list" id="itemsList">
               <div class="empty-state">Scanned receipt items will appear here.</div>
             </div>
 
+            <!-- This keeps the raw OCR text available in case the scan needs manual correction. -->
             <details class="raw-text">
               <summary>Scanned text</summary>
               <textarea id="outputText" spellcheck="true" placeholder="OCR text appears here. You can edit it, then rebuild the item list."></textarea>
@@ -90,6 +100,7 @@
           </section>
         </div>
 
+        <!-- Step 2: after submitting the receipt, participants enter what they had. -->
         <section class="panel participants-panel is-disabled" id="participantsPanel" aria-label="Participant shares">
           <div class="section-top">
             <div>
@@ -97,6 +108,7 @@
               <h2>Participant shares</h2>
             </div>
             <div class="participant-actions">
+              <!-- Placeholder is the faint example text inside the name field. -->
               <label class="name-field">
                 <span>Name</span>
                 <input id="participantName" type="text" placeholder="Alex">
@@ -114,7 +126,9 @@
       </section>
     </main>
 
+    <!-- Tesseract.js is the OCR library that reads text from images. It loads from a CDN. -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- app.js contains the behavior: scanning, parsing, totals, and participant claims. -->
     <script src="app.js"></script>
   </body>
 </html>
